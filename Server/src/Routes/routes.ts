@@ -1,6 +1,6 @@
 import { Router } from "express";
-import loginRouter from "./../Auth/Login";
-import signupRouter from "./../Auth/Signup";
+import loginRouter from "./Auth/Login";
+import signupRouter from "./Auth/Signup";
 import usersInfoRouter from "../UsersInfo/UsersInfo";
 import getCurrentUserRouter from "./getCurrentUser";
 

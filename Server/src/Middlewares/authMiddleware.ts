@@ -30,6 +30,7 @@ export const authMiddleware = (
       phone: string;
       name: string;
     };
+    console.log("Decoded token:", decoded);
 
     req.user = {
       userid: decoded.userid,

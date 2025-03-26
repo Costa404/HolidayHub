@@ -1,5 +1,5 @@
-import { generateToken } from "../Utility/generateWebToken";
-import pool from "../Database/db";
+import { generateToken } from "../../Utility/generateWebToken";
+import pool from "../../Database/db";
 import bcrypt from "bcrypt";
 import { Router } from "express";
 
@@ -22,7 +22,15 @@ loginRouter.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const token = generateToken(user.email, user.username, user.id);
+    const token = generateToken(
+      user.email,
+      user.username,
+      user.userid,
+      user.role,
+      user.jobposition,
+      user.phone,
+      user.name
+    );
 
     console.log("User logged in successfully:", user.email);
     client.release();

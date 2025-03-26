@@ -6,14 +6,14 @@ const getCurrentUserRouter = express.Router();
 getCurrentUserRouter.get(
   "/currentUser",
   authMiddleware,
-  async (
-    req: Request & { user?: { userId: number; username: string } },
-    res: Response
-  ) => {
+  async (req: Request, res: Response) => {
     if (!req.user) {
       return res.status(401).json({ error: "User not authenticated" });
     }
-    res.json(req.user);
+
+    const { userid, username, email, role, jobPosition, phone, name } =
+      req.user;
+    res.json({ userid, username, email, role, jobPosition, phone, name });
   }
 );
 
