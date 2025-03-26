@@ -54,28 +54,28 @@ const Navbar = ({ userType }) => {
               </li>
             )}
 
-            {userType === "admin" && (
-              <>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="/admin"
-                    style={{ fontSize: "1.4rem" }}
-                  >
-                    Admin Dashboard
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="/admin/users"
-                    style={{ fontSize: "1.4rem" }}
-                  >
-                    User Management
-                  </Link>
-                </li>
-              </>
-            )}
+            {/* {userType === "admin" && ( */}
+            <>
+              <li className="nav-item">
+                <Link
+                  className="nav-link"
+                  to="/adminDashBoard"
+                  style={{ fontSize: "1.4rem" }}
+                >
+                  Admin Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link"
+                  to="/admin/users"
+                  style={{ fontSize: "1.4rem" }}
+                >
+                  User Management
+                </Link>
+              </li>
+            </>
+            {/* )} */}
 
             {/* New Authentication Link */}
             <li className="nav-item">
@@ -107,7 +107,7 @@ const Navbar = ({ userType }) => {
                 <li>
                   <Link
                     className="dropdown-item"
-                    to="/profile"
+                    to="/myProfile"
                     style={{ fontSize: "1.4rem" }}
                   >
                     Profile

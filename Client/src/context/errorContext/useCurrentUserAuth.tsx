@@ -5,7 +5,7 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
-import { useGetCurrentUser } from "../Api/ApiNode/get/getCurrentUser ";
+import { useGetCurrentUser } from "../../Api/getCurrentUser ";
 
 interface DecodedToken {
   username: string;

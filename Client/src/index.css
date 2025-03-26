@@ -4,3 +4,8 @@ html {
 body {
   overflow: hidden;
 }
+
+.custom-calendar .react-datepicker__day--selected {
+  background-color: #0d6efd;
+  color: white;
+}

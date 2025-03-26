@@ -1,11 +1,11 @@
-import { Spinner, Table, Alert, Container } from "react-bootstrap";
+import { Table, Alert, Container } from "react-bootstrap";
 import { useFetchUsers } from "./useFetchUsers";
+import LoadingSpinner from "../../../Utility/Loading/LoadingSpinner";
 
 export default function UsersList() {
   const { users, loading, error } = useFetchUsers();
 
-  if (loading)
-    return <Spinner animation="border" className="d-block mx-auto mt-4" />;
+  if (loading) return <LoadingSpinner />;
   if (error) return <Alert variant="danger">{error}</Alert>;
 
   return (
@@ -25,8 +25,8 @@ export default function UsersList() {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
+            <tr key={user.userid}>
+              <td>{user.userid}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.username}</td>

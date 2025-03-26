@@ -15,6 +15,12 @@ const LazyLoginForm = React.lazy(
 const LazyUsers = React.lazy(
   () => import("../components/Pages/Users/Users.tsx")
 );
+const LazyManageHolidays = React.lazy(
+  () => import("../components/Pages/ManageHolidays/ManageHolidays.tsx")
+);
+const LazyAdminDashboard = React.lazy(
+  () => import("../components/Pages/AdminDashboard/AdminDashboard.tsx")
+);
 
 export const useAppRoutes = () => {
   return createBrowserRouter([
@@ -39,6 +45,14 @@ export const useAppRoutes = () => {
         {
           path: "users",
           element: <LazyUsers />,
+        },
+        {
+          path: "myProfile",
+          element: <LazyManageHolidays />,
+        },
+        {
+          path: "AdminDashboard",
+          element: <LazyAdminDashboard />,
         },
       ],
     },
