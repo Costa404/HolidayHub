@@ -7,10 +7,9 @@ import { isValidEmail } from "../../Utility/emailValidation";
 const signupRouter = Router();
 
 signupRouter.post("/signup", async (req, res) => {
-  const { userid, email, password, username, name, phone, role, jobPosition } =
+  const { email, password, username, name, phone, role, jobPosition } =
     req.body;
   console.log("Received data: ", {
-    userid,
     email,
     password,
     username,
@@ -20,19 +19,12 @@ signupRouter.post("/signup", async (req, res) => {
     jobPosition,
   });
 
-  // // Validação do email
-  // if (!isValidEmail(email)) {
-  //   return res.status(400).json({ error: "Invalid email format" });
-  // }
-
   if (password.length < 6) {
-    return res
-      .status(400)
-      .json({ error: "Password must be at least 6 characters" });
+    res.status(400).json({ error: "Password must be at least 6 characters" });
+    return;
   }
 
   if (
-    !userid ||
     !email ||
     !password ||
     !username ||
@@ -41,7 +33,8 @@ signupRouter.post("/signup", async (req, res) => {
     !role ||
     !jobPosition
   ) {
-    return res.status(400).json({ error: "All fields must be filled" });
+    res.status(400).json({ error: "All fields must be filled" });
+    return;
   }
 
   try {
@@ -54,23 +47,18 @@ signupRouter.post("/signup", async (req, res) => {
 
     if (userCheck.rows.length > 0) {
       client.release();
-      return res
-        .status(400)
-        .json({ error: "E-mail or Username already in use" });
+      res.status(400).json({ error: "E-mail or Username already in use" });
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(password, 4);
 
-    await client.query(
-      "INSERT INTO users (email, password, username, name, phone, role, jobPosition) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+    const result = await client.query(
+      "INSERT INTO users (email, password, username, name, phone, role, jobposition) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING userid, email, username, role, jobposition, phone, name",
       [email, hashedPassword, username, name, phone, role, jobPosition]
     );
 
-    const newUserResult = await client.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email]
-    );
-    const newUser = newUserResult.rows[0];
+    const newUser = result.rows[0];
     const token = generateToken(
       newUser.email,
       newUser.username,

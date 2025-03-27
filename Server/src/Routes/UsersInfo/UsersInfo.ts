@@ -1,5 +1,5 @@
-import pool from "../Database/db";
 import { Router } from "express";
+import pool from "../../Database/db";
 
 const usersInfoRouter = Router();
 

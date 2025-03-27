@@ -1,8 +1,12 @@
 import { Router } from "express";
 import loginRouter from "./Auth/Login";
 import signupRouter from "./Auth/Signup";
-import usersInfoRouter from "../UsersInfo/UsersInfo";
-import getCurrentUserRouter from "./getCurrentUser";
+
+import usersInfoRouter from "./UsersInfo/UsersInfo";
+import deleteUserRouter from "./UsersInfo/deleteUser";
+import getCurrentUserRouter from "./UsersInfo/getCurrentUser";
+import getHolidaysRouter from "./Holidays/getHolidaysRoute";
+import addHolidaysRouter from "./Holidays/addHolidaysRoutes";
 
 const apiRouter = Router();
 
@@ -11,5 +15,8 @@ apiRouter.use("/", loginRouter);
 apiRouter.use("/", signupRouter);
 apiRouter.use("/", usersInfoRouter);
 apiRouter.use("/", getCurrentUserRouter);
+apiRouter.use("/", deleteUserRouter);
+apiRouter.use("/", getHolidaysRouter);
+apiRouter.use("/", addHolidaysRouter);
 
 export default apiRouter;

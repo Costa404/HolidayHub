@@ -19,7 +19,8 @@ loginRouter.post("/login", async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       console.warn("Invalid login attempt for email:", email);
       client.release();
-      return res.status(401).json({ error: "Invalid credentials" });
+      res.status(401).json({ error: "Invalid credentials" });
+      return;
     }
 
     const token = generateToken(
