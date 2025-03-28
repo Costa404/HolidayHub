@@ -10,8 +10,12 @@ deleteUserRouter.delete(
   async (req: Request, res: Response) => {
     const { userId } = req.params;
 
+    const client = await pool.connect();
+
     try {
-      const result = await pool.query("DELETE FROM users WHERE userid = $1", [
+      await client.query("DELETE FROM holidays WHERE userid = $1", [userId]);
+
+      const result = await client.query("DELETE FROM users WHERE userid = $1", [
         userId,
       ]);
 
@@ -20,9 +24,12 @@ deleteUserRouter.delete(
         return;
       }
 
+      client.release();
+
       res.json({ message: "User deleted successfully!" });
     } catch (error) {
       console.error("Error deleting user:", error);
+      client.release();
       res.status(500).json({ message: "Server error" });
     }
   }
