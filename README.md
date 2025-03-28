@@ -11,7 +11,7 @@ This app allows users to manage their holidays with features for both regular us
 
 Technologies Used:
 
-  Frontend: React, TypeScript, Zustand, and React Router with lazy loading.
+  Frontend: React, TypeScript, Zustand, boostrap and React Router with lazy loading.
 
   Backend: Node.js, PostgreSQL (used to store user and holiday data), Express
 
