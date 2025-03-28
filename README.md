@@ -13,7 +13,7 @@ Technologies Used:
 
   Frontend: React, TypeScript, Zustand, boostrap and React Router with lazy loading.
 
-  Backend: Node.js, PostgreSQL (used to store user and holiday data), Express
+  Backend: Node.js, Typescript, PostgreSQL (used to store user and holiday data), Express
 
 Installation:
 
