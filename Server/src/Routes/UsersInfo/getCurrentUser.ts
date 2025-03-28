@@ -19,7 +19,7 @@ getCurrentUserRouter.get(
 
     const { userid, username, email, role, jobPosition, phone, name } =
       req.user;
-    res.json({ userid, username, email, role, jobPosition, phone, name }); // ✅ SEM "return"!
+    res.json({ userid, username, email, role, jobPosition, phone, name });
   }
 );
 
