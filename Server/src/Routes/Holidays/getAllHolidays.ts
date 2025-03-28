@@ -26,7 +26,7 @@ getAllHolidaysRouter.get("/getAllHolidays", async (req, res) => {
 
     res.status(200).json({ holidays: result.rows });
   } catch (error) {
-    console.error("Error fetching all holidays:", error);
+    console.error("Error fetching  holidays:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });

@@ -12,8 +12,8 @@ import getAllHolidaysRouter from "./Holidays/getAllHolidays";
 const apiRouter = Router();
 
 // auth
-apiRouter.use("/", loginRouter);
 apiRouter.use("/", signupRouter);
+apiRouter.use("/", loginRouter);
 apiRouter.use("/", usersInfoRouter);
 apiRouter.use("/", getCurrentUserRouter);
 apiRouter.use("/", deleteUserRouter);

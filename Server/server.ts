@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-// console.log("CORS Origin:", corsOrigin);
+console.log("CORS Origin:", corsOrigin);
 
 app.use(express.json());
 app.use("/api", apiRouter);

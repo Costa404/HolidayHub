@@ -26,7 +26,7 @@ deleteUserRouter.delete(
 
       client.release();
 
-      res.json({ message: "User deleted successfully!" });
+      res.json({ message: "User deleted successfully" });
     } catch (error) {
       console.error("Error deleting user:", error);
       client.release();
