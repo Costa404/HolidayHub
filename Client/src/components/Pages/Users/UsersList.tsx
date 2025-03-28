@@ -1,4 +1,4 @@
-import { Table, Alert, Container } from "react-bootstrap";
+import { Table, Alert } from "react-bootstrap";
 import { useFetchUsers } from "./useFetchUsers";
 import LoadingSpinner from "../../../Utility/Loading/LoadingSpinner";
 
@@ -9,9 +9,12 @@ export default function UsersList() {
   if (error) return <Alert variant="danger">{error}</Alert>;
 
   return (
-    <Container className="mt-4">
-      <h2 className="text-center mb-4">Lista de Usuários</h2>
-      <Table striped bordered hover>
+    <section
+      className=" w-75 backgroundMobile vh-100"
+      style={{ backgroundColor: "var(--bg-color)" }}
+    >
+      <h2 className="text-center mb-4">User List</h2>
+      <Table bordered hover>
         <thead>
           <tr>
             <th>ID</th>
@@ -20,7 +23,7 @@ export default function UsersList() {
             <th>Username</th>
             <th>Job Position</th>
             <th>Role</th>
-            <th>Telefone</th>
+            <th>Mobile</th>
           </tr>
         </thead>
         <tbody>
@@ -30,13 +33,13 @@ export default function UsersList() {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.username}</td>
-              <td>{user.jobPosition}</td>
-              <td>{user.role}</td>
+              <td>{user.jobposition}</td>
               <td>{user.phone}</td>
+              <td>{user.role}</td>
             </tr>
           ))}
         </tbody>
       </Table>
-    </Container>
+    </section>
   );
 }

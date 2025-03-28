@@ -1,26 +1,20 @@
 import { useError } from "./useError";
 
 const ErrorDisplay = () => {
-  const { error } = useError();
+  const { error, setError } = useError();
 
   return error ? (
-    <p
-      style={{
-        position: "absolute",
-
-        color: "red",
-
-        borderRadius: "5px",
-        fontSize: "1.2rem",
-        display: "flex",
-        justifyContent: "center",
-        fontWeight: "600",
-        opacity: "1",
-        transition: "opacity 2s ease-out",
-      }}
+    <div
+      className="alert alert-danger alert-dismissible fade show w-100 mt-3 fs-5"
+      style={{ maxWidth: "40rem" }}
     >
       {error}
-    </p>
+      <button
+        type="button"
+        className="btn-close"
+        onClick={() => setError(null)}
+      ></button>
+    </div>
   ) : null;
 };
 

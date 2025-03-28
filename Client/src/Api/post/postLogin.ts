@@ -1,14 +1,8 @@
-export const authLogin = async (
-  email: string,
-  password: string,
-  setLoading: (loading: boolean) => void,
-  setError: (error: string | null) => void
-) => {
-  setLoading(true);
-  setError(null);
+import { apiFetch } from "../api";
 
+export const authLogin = async (email: string, password: string) => {
   try {
-    const response = await fetch("http://localhost:3000/api/login", {
+    const response = await apiFetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,21 +10,23 @@ export const authLogin = async (
       body: JSON.stringify({ email, password }),
     });
 
-    if (!response.ok) {
-      throw new Error("Invalid credentials. Please try again.");
+    if (!response.token) {
+      throw new Error("No token received in response");
     }
 
-    const data = await response.json();
-    const { token } = data;
+    localStorage.setItem("authToken", response.token);
 
-    localStorage.setItem("authToken", token);
-
-    return data;
+    return {
+      success: true,
+      data: response,
+    };
   } catch (error: any) {
     console.error("Login error:", error);
-    setError(error.message || "An unexpected error occurred.");
-    throw error;
-  } finally {
-    setLoading(false);
+
+    return {
+      success: false,
+      error: error.message || "An unexpected error occurred",
+      status: error.response?.status,
+    };
   }
 };

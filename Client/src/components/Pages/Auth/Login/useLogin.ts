@@ -1,75 +1,82 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useError } from "../../../../context/errorContext/useError";
 import { authLogin } from "../../../../Api/post/postLogin";
+import { useCurrentUser } from "../../../../context/useCurrentUserAuth";
 
 export const useLogin = () => {
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
   const [loadingLogin, setLoadingLogin] = useState(false);
-  const [errorLogin, setErrorLogin] = useState<string | null>(null);
   const [errorEmail, setErrorEmail] = useState<string | null>(null);
   const [errorPassword, setErrorPassword] = useState<string | null>(null);
+  const [forceUpdate, setForceUpdate] = useState(Boolean);
+
+  const navigate = useNavigate();
+  const { setError } = useError();
+  const { refetchCurrentUser } = useCurrentUser();
 
   const handleEmailChangeLogin = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setEmailLogin(event.target.value);
-    setErrorEmail(null);
+    if (errorEmail) setErrorEmail(null);
   };
 
   const handlePasswordChangeLogin = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPasswordLogin(event.target.value);
-    setErrorPassword(null);
+    if (errorPassword) setErrorPassword(null);
   };
 
-  const handleSubmitLogin = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    setErrorLogin(null);
-    setErrorEmail(null);
-    setErrorPassword(null);
-
+  const validateForm = (): boolean => {
     let isValid = true;
-    if (!emailLogin) {
-      setErrorEmail("Email is required.");
+
+    if (!emailLogin.trim()) {
+      setErrorEmail("Email is required");
       isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(emailLogin)) {
-      setErrorEmail("Please enter a valid email address.");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailLogin)) {
+      setErrorEmail("Please enter a valid email address");
       isValid = false;
     }
 
     if (!passwordLogin) {
-      setErrorPassword("Password is required.");
+      setErrorPassword("Password is required");
       isValid = false;
     } else if (passwordLogin.length < 6) {
-      setErrorPassword("Password must be at least 6 characters.");
+      setErrorPassword("Password must be at least 6 characters");
       isValid = false;
     }
 
-    if (!isValid) return;
+    return isValid;
+  };
 
+  const handleSubmitLogin = async (event: React.FormEvent) => {
     setLoadingLogin(true);
+    event.preventDefault();
+
+    if (!validateForm()) {
+      setLoadingLogin(false);
+      return;
+    }
 
     try {
-      await authLogin(
-        emailLogin,
-        passwordLogin,
-        setLoadingLogin,
-        setErrorLogin
-      );
+      const result = await authLogin(emailLogin, passwordLogin);
 
+      if (!result.success) {
+        setError(result.error || "Login failed. Please try again.");
+        return;
+      }
+
+      await refetchCurrentUser();
       setEmailLogin("");
       setPasswordLogin("");
-    } catch (err: any) {
-      if (err.response?.data?.error) {
-        setErrorLogin(err.response.data.error);
-      } else if (err.message.includes("Network Error")) {
-        setErrorLogin("Network error. Please check your connection.");
-      } else {
-        setErrorLogin("Invalid credentials. Please try again.");
-      }
-      console.error("Login failed:", err);
+      navigate("/");
+      setForceUpdate(true);
+    } catch (error) {
+      console.error("Login process error:", error);
+      setError("An unexpected error occurred during login");
     } finally {
       setLoadingLogin(false);
     }
@@ -79,14 +86,11 @@ export const useLogin = () => {
     emailLogin,
     passwordLogin,
     loadingLogin,
-    errorLogin,
     errorEmail,
     errorPassword,
-    setEmailLogin,
-    setPasswordLogin,
     handleEmailChangeLogin,
     handlePasswordChangeLogin,
     handleSubmitLogin,
-    setErrorLogin,
+    forceUpdate,
   };
 };

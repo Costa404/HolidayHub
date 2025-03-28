@@ -5,7 +5,91 @@ body {
   overflow: hidden;
 }
 
+:root {
+  --bg-color: #f0f8ff;
+}
+
 .custom-calendar .react-datepicker__day--selected {
   background-color: #0d6efd;
   color: white;
+}
+
+.hover {
+  cursor: pointer;
+}
+
+.btnTransform:hover {
+  transform: scale(1.1);
+}
+
+.navbarRightDesktop {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+/* =======================
+
+Modal
+
+======================= */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+.modalContent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+
+  z-index: 1001;
+
+  min-width: 50rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.inputWidthModalHolidays {
+  width: 20rem;
+}
+/* =====================
+
+mobile
+
+===================== */
+.navbarMobile {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+/* =====================
+
+media query
+
+===================== */
+
+@media (max-width: 777px) {
+  .backgroundMobile {
+    min-width: 100%;
+  }
+  .mobileRightNavbar {
+    display: none !important;
+  }
+}
+@media (min-width: 777px) {
+  .faBarsMobile {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .overlay {
+    display: none;
+  }
 }
